@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" class="dark scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Weekly Tech Journal - A curated editorial publication presenting the 5 most important tech stories of the week in a visual Bento Grid.">
+  <title>Weekly Tech Journal — The Week in Tech</title>
+
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
+    rel="stylesheet">
+
+  <!-- Compiled Tailwind CSS v4 from CLI -->
+  <link rel="stylesheet" href="./src/output.css">
+
+  <!-- Tailwind CSS Engine -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Canvas Confetti for Celebration Animation -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+
+  <!-- Immediate Theme Initialization Script (Prevents FOUC) -->
+  <script>
+    (function () {
+      try {
+        const savedTheme = localStorage.getItem('wtj_theme_v1') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.documentElement.classList.add('light');
+        }
+      } catch (e) { }
+    })();
+  </script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            accent: {
+              primary: '#6366f1',
+              hover: '#4f46e5',
+              amber: '#f59e0b',
+              emerald: '#10b981',
+              rose: '#f43f5e'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Comprehensive Theme Design System -->
+  <style>
+    :root,
+    html[data-theme="dark"] {
+      --bg-primary: #090a0d;
+      --bg-surface: rgba(18, 20, 26, 0.88);
+      --bg-card: #141720;
+      --bg-card-hover: #1c202d;
+      --bg-card-secondary: #1a1e2a;
+      --bg-input: #0e1017;
+      --border-subtle: rgba(255, 255, 255, 0.1);
+      --border-medium: rgba(255, 255, 255, 0.16);
+      --border-hover: rgba(255, 255, 255, 0.3);
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --text-faint: #64748b;
+      --accent-primary: #818cf8;
+      --accent-hover: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --card-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+      --card-inner-bg: rgba(255, 255, 255, 0.05);
+      --card-inner-hover: rgba(255, 255, 255, 0.1);
+      --brand-badge-bg: rgba(255, 255, 255, 0.06);
+      --brand-badge-border: rgba(255, 255, 255, 0.12);
+      --badge-slot-bg: rgba(0, 0, 0, 0.5);
+    }
+
+    html[data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-surface: rgba(255, 255, 255, 0.92);
+      --bg-card: #ffffff;
+      --bg-card-hover: #fcfcfd;
+      --bg-card-secondary: #f1f5f9;
+      --bg-input: #f8fafc;
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --border-medium: rgba(0, 0, 0, 0.14);
+      --border-hover: rgba(99, 102, 241, 0.5);
+      --text-primary: #0f172a;
+      --text-secondary: #334155;
+      --text-muted: #64748b;
+      --text-faint: #94a3b8;
+      --accent-primary: #4f46e5;
+      --accent-hover: #4338ca;
+      --accent-glow: rgba(79, 70, 229, 0.15);
+      --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
+      --card-inner-bg: rgba(0, 0, 0, 0.04);
+      --card-inner-hover: rgba(0, 0, 0, 0.08);
+      --brand-badge-bg: #f1f5f9;
+      --brand-badge-border: #e2e8f0;
+      --badge-slot-bg: rgba(15, 23, 42, 0.75);
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-card {
+      background-color: var(--bg-card);
+      border-color: var(--border-subtle);
+      box-shadow: var(--card-shadow);
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    }
+
+    .theme-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    .theme-input {
+      background-color: var(--bg-input);
+      border-color: var(--border-medium);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+
+    .theme-surface {
+      background-color: var(--bg-surface);
+      border-color: var(--border-subtle);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    html[data-theme="dark"] input[type="date"] {
+      color-scheme: dark;
+    }
+
+    html[data-theme="light"] input[type="date"] {
+      color-scheme: light;
+    }
+
+    select.theme-input option {
+      background-color: var(--bg-card);
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen font-sans antialiased" id="body-root">
+
+  <!-- =========================================================================
+       1. STICKY HEADER / MASTHEAD BAR
+       ========================================================================= -->
+  <header class="sticky top-0 z-40 theme-surface backdrop-blur-md border-b">
+    <div class="max-w-[1240px] mx-auto px-6 py-3.5 flex items-center justify-between">
+
+      <!-- Brand Logo & Title -->
+      <div class="flex items-center gap-3">
+        <a href="#" onclick="showReaderView(); return false;"
+          class="flex items-center gap-2.5 font-serif font-bold text-xl tracking-tight"
+          style="color: var(--text-primary)">
+          <div class="w-7 h-7 rounded-lg flex items-center justify-center text-white shadow-md flex-shrink-0"
+            style="background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"
+              style="color: #ffffff;">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <span>Weekly Tech Journal</span>
+        </a>
+
+        <!-- Edition Badge Pill -->
+        <button onclick="openArchiveModal()"
+          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-mono text-xs font-semibold hover:border-indigo-500 transition-colors cursor-pointer"
+          style="background-color: var(--brand-badge-bg); border: 1px solid var(--brand-badge-border); color: var(--accent-primary);">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+          </svg>
+          <span id="header-edition-number">#069</span>
+        </button>
+      </div>
+
+      <!-- Action Buttons (Archive, Theme, Editor Toggle) -->
+      <div class="flex items-center gap-2.5">
+        <!-- Archive Button -->
+        <button onclick="openArchiveModal()"
+          class="w-9 h-9 rounded-xl flex items-center justify-center transition-all cursor-pointer"
+          style="color: var(--text-secondary); background-color: var(--brand-badge-bg); border: 1px solid var(--border-subtle);"
+          title="Browse Past Editions">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+          </svg>
+        </button>
+
+        <!-- Dark / Light Theme Toggle Button -->
+        <button id="theme-toggle-btn" onclick="toggleTheme()"
+          class="w-9 h-9 rounded-xl flex items-center justify-center transition-all cursor-pointer"
+          style="color: var(--text-secondary); background-color: var(--brand-badge-bg); border: 1px solid var(--border-subtle);"
+          title="Switch Theme">
+          <svg id="theme-icon-sun" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg id="theme-icon-moon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+
+        <!-- Mode Toggle Button (Reader View <-> Editor Panel) -->
+        <button onclick="toggleViewMode()" id="view-mode-btn"
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 shadow-lg shadow-indigo-500/25 border border-indigo-400/30 transition-all cursor-pointer">
+          <svg id="view-mode-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+          <span id="view-mode-label">✏️ Editor Panel</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MAIN CONTENT WRAPPER
+       ========================================================================= -->
+  <main class="max-w-[1240px] mx-auto px-6 py-8 pb-20">
+
+    <!-- =======================================================================
+         VIEW 1: READER VIEW (DEFAULT)
+         ======================================================================= -->
+    <div id="reader-view-container" class="space-y-12">
+
+      <!-- Masthead Header -->
+      <section class="pb-8 text-left" style="border-bottom: 1px solid var(--border-subtle);">
+        <div class="flex items-center justify-between flex-wrap gap-4 mb-3 font-mono text-xs uppercase tracking-widest"
+          style="color: var(--text-muted)">
+          <div class="flex items-center gap-1.5 cursor-pointer hover:opacity-80 transition-opacity"
+            onclick="openArchiveModal()" title="View Weekly Archive">
+            <span>THE WEEK IN TECH ·</span>
+            <span class="font-bold underline decoration-dotted" style="color: var(--accent-primary)"
+              id="masthead-issue-num">#069</span>
+          </div>
+          <div class="flex items-center gap-1.5" style="color: var(--text-muted)">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <span id="masthead-date">Sep 4, 2026</span>
+          </div>
+        </div>
+
+        <h1 class="font-serif text-4xl md:text-6xl font-bold tracking-tight mb-3" style="color: var(--text-primary)"
+          id="masthead-title">
+          The Frontier AI Shift
+        </h1>
+        <p class="text-lg max-w-2xl" style="color: var(--text-secondary)" id="masthead-tagline">
+          Five stories worth your attention.
+        </p>
+      </section>
+
+      <!-- Top 5 Bento Grid -->
+      <section id="bento-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[230px]">
+        <!-- Bento Cards Injected Dynamically by renderBentoGrid() -->
+      </section>
+
+      <!-- Editorial Narrative & From the Editor -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- "THE WEEK, IN 150 WORDS" -->
+        <div class="p-8 rounded-2xl theme-card border flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider"
+                style="color: var(--accent-primary)">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>The Week, in 150 Words</span>
+              </div>
+              <span id="summary-word-count" class="font-mono text-xs px-2 py-0.5 rounded-full"
+                style="background-color: var(--brand-badge-bg); border: 1px solid var(--border-subtle); color: var(--text-muted)">142
+                words</span>
+            </div>
+
+            <p id="weekly-summary-text" class="text-base leading-relaxed mb-6" style="color: var(--text-secondary)"></p>
+          </div>
+
+          <div class="flex items-center gap-2 text-xs font-mono" style="color: var(--text-faint)">
+            <span>✨ Curated & synthesized weekly</span>
+          </div>
+        </div>
+
+        <!-- "FROM THE EDITOR" -->
+        <div class="p-8 rounded-2xl theme-card border flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider"
+                style="color: var(--accent-primary)">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+                <span>From The Editor</span>
+              </div>
+            </div>
+
+            <p id="editors-note-text" class="font-serif italic text-lg leading-relaxed mb-6"
+              style="color: var(--text-primary)"></p>
+          </div>
+
+          <div class="flex items-center gap-3 pt-4" style="border-top: 1px solid var(--border-subtle);">
+            <img id="editor-avatar-img"
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
+              class="w-11 h-11 rounded-full object-cover border-2 border-indigo-500">
+            <div>
+              <h4 class="text-sm font-bold" style="color: var(--text-primary)" id="editor-name-display">Alex Sterling
+              </h4>
+              <p class="text-xs" style="color: var(--text-muted)" id="editor-role-display">Editor-in-Chief</p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- "SEE YOU NEXT FRIDAY" Banner -->
+      <section class="p-8 md:p-10 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl"
+        style="background-color: var(--bg-card-secondary); border: 1px solid var(--border-medium);">
+        <div>
+          <h3 class="font-serif text-2xl md:text-3xl font-bold mb-2" style="color: var(--text-primary)">See you next
+            Friday</h3>
+          <p class="text-sm md:text-base" style="color: var(--text-muted)">The five most important technology updates
+            synthesized and sent via email every Friday morning.</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full font-mono text-xs font-semibold"
+            style="background-color: var(--brand-badge-bg); border: 1px solid var(--border-medium); color: var(--accent-primary);">
+            <span>📬 5 Key Updates</span>
+            <span class="opacity-40">•</span>
+            <span style="color: var(--text-secondary);">Every Friday Morning</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- =======================================================================
+         VIEW 2: FULL INTERACTIVE EDITOR CMS STUDIO
+         ======================================================================= -->
+    <div id="editor-panel-container" class="hidden grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-8">
+
+      <!-- Left Sidebar: Edition Manager & Publishing Checklist -->
+      <aside class="space-y-6">
+
+        <!-- Edition Metadata Card -->
+        <div class="p-6 rounded-2xl theme-card border space-y-4">
+          <div class="flex items-center justify-between pb-3" style="border-bottom: 1px solid var(--border-subtle)">
+            <h3 class="font-bold flex items-center gap-2" style="color: var(--text-primary)">
+              <span style="color: var(--accent-primary)">✨</span>
+              <span>Edition Manager</span>
+            </h3>
+            <span id="editor-status-badge"
+              class="px-2.5 py-0.5 rounded-full font-mono text-[11px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              PUBLISHED
+            </span>
+          </div>
+
+          <div>
+            <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Edition
+              Title</label>
+            <input type="text" id="input-edition-title" oninput="updateEditionField('title', this.value)"
+              class="w-full px-3.5 py-2 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500">
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Issue #</label>
+              <div class="relative">
+                <select id="input-edition-number" onchange="handleIssueDropdownChange(this.value)"
+                  class="w-full px-3.5 py-2 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500 font-mono font-semibold cursor-pointer pr-8 appearance-none">
+                  <!-- Dynamic Options populated by populateIssueDropdown() -->
+                </select>
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-xs"
+                  style="color: var(--text-muted)">▼</div>
+              </div>
+            </div>
+            <div>
+              <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Publish
+                Date</label>
+              <input type="date" id="input-edition-date" onchange="handleDateCalendarChange(this.value)"
+                class="w-full px-3.5 py-2 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500 font-mono cursor-pointer">
+            </div>
+          </div>
+
+          <button onclick="publishEditionNow()"
+            class="w-full py-3 rounded-xl font-semibold text-sm bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 cursor-pointer">
+            <span>🚀 Publish Edition</span>
+          </button>
+        </div>
+
+        <!-- Real-Time Publishing Checklist Card -->
+        <div class="p-6 rounded-2xl theme-card border space-y-4">
+          <div class="flex items-center justify-between pb-3" style="border-bottom: 1px solid var(--border-subtle)">
+            <h3 class="font-bold" style="color: var(--text-primary)">Publishing Checklist</h3>
+            <span id="checklist-progress-text" class="font-mono text-xs text-emerald-500 font-bold">5/5 Ready
+              (100%)</span>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="w-full h-1.5 rounded-full overflow-hidden" style="background-color: var(--brand-badge-bg)">
+            <div id="checklist-progress-bar"
+              class="h-full bg-gradient-to-r from-indigo-500 to-emerald-400 transition-all duration-300"
+              style="width: 100%;"></div>
+          </div>
+
+          <!-- Checklist Items -->
+          <div id="checklist-items-list" class="space-y-3 text-xs" style="color: var(--text-secondary)">
+            <!-- Dynamic checklist items -->
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- Main Editor Tabs & Forms Area -->
+      <section class="space-y-6">
+
+        <!-- Editor Tabs Navigation -->
+        <div class="flex items-center gap-2 pb-2 overflow-x-auto" style="border-bottom: 1px solid var(--border-subtle)">
+          <button onclick="switchEditorTab('stories')" id="tab-btn-stories"
+            class="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition-all cursor-pointer">
+            Top 5 Stories
+          </button>
+          <button onclick="switchEditorTab('summary')" id="tab-btn-summary"
+            class="px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer"
+            style="background-color: var(--brand-badge-bg); color: var(--text-muted)">
+            Weekly 150-Word Summary
+          </button>
+          <button onclick="switchEditorTab('note')" id="tab-btn-note"
+            class="px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer"
+            style="background-color: var(--brand-badge-bg); color: var(--text-muted)">
+            Editor's Note & Bio
+          </button>
+          <button onclick="switchEditorTab('preview')" id="tab-btn-preview"
+            class="px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer"
+            style="background-color: var(--brand-badge-bg); color: var(--text-muted)">
+            👁️ Live Bento Preview
+          </button>
+        </div>
+
+        <!-- TAB 1: 5 STORIES EDITOR -->
+        <div id="editor-tab-stories" class="p-6 md:p-8 rounded-2xl theme-card border space-y-6">
+
+          <!-- Story Selector (1 to 5) -->
+          <div class="flex items-center justify-between flex-wrap gap-4 pb-4"
+            style="border-bottom: 1px solid var(--border-subtle)">
+            <div class="flex items-center gap-2">
+              <button onclick="selectStorySlot(1)" id="slot-btn-1"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer">👑 #1
+                Lead</button>
+              <button onclick="selectStorySlot(2)" id="slot-btn-2"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer"
+                style="background-color: var(--brand-badge-bg); color: var(--text-muted)">#2</button>
+              <button onclick="selectStorySlot(3)" id="slot-btn-3"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer"
+                style="background-color: var(--brand-badge-bg); color: var(--text-muted)">#3</button>
+              <button onclick="selectStorySlot(4)" id="slot-btn-4"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer"
+                style="background-color: var(--brand-badge-bg); color: var(--text-muted)">#4 Wide</button>
+              <button onclick="selectStorySlot(5)" id="slot-btn-5"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer"
+                style="background-color: var(--brand-badge-bg); color: var(--text-muted)">#5</button>
+            </div>
+          </div>
+
+          <!-- Story Form Fields -->
+          <div class="space-y-4">
+            <div>
+              <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Story Headline
+                (Title)</label>
+              <input type="text" id="input-story-title" oninput="syncStoryFieldFromInput('title', this.value)"
+                class="w-full px-4 py-2.5 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500 font-serif text-lg">
+            </div>
+
+            <div>
+              <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Subtitle /
+                Excerpt Teaser</label>
+              <textarea id="input-story-subtitle" oninput="syncStoryFieldFromInput('subtitle', this.value)" rows="2"
+                class="w-full px-4 py-2.5 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500 leading-relaxed"></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block font-mono text-xs uppercase mb-1.5"
+                  style="color: var(--text-muted)">Category</label>
+                <select id="input-story-category" onchange="syncStoryFieldFromInput('category', this.value)"
+                  class="w-full px-4 py-2.5 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500">
+                  <option value="Artificial Intelligence">Artificial Intelligence</option>
+                  <option value="AI & Hardware">AI & Hardware</option>
+                  <option value="Semiconductors">Semiconductors</option>
+                  <option value="Design & UX">Design & UX</option>
+                  <option value="Open Source">Open Source</option>
+                  <option value="Cloud & Infra">Cloud & Infra</option>
+                  <option value="Quantum Computing">Quantum Computing</option>
+                  <option value="Robotics">Robotics</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Estimated Read
+                  Time</label>
+                <input type="text" id="input-story-time" oninput="syncStoryFieldFromInput('readTime', this.value)"
+                  class="w-full px-4 py-2.5 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500">
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Cover Image
+                URL</label>
+              <input type="text" id="input-story-image" oninput="syncStoryFieldFromInput('imageUrl', this.value)"
+                class="w-full px-4 py-2.5 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500">
+            </div>
+
+            <!-- Full Article Content -->
+            <div class="pt-4" style="border-top: 1px solid var(--border-subtle)">
+              <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Full Article
+                Prose (For Slide-out Drawer)</label>
+              <textarea id="input-story-content" oninput="syncStoryFieldFromInput('content', this.value)" rows="6"
+                class="w-full px-4 py-2.5 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500 leading-relaxed font-sans"></textarea>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4" style="border-top: 1px solid var(--border-subtle)">
+              <div>
+                <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Author
+                  Name</label>
+                <input type="text" id="input-story-author" oninput="syncStoryFieldFromInput('author', this.value)"
+                  class="w-full px-4 py-2 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500">
+              </div>
+              <div>
+                <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Source
+                  Name</label>
+                <input type="text" id="input-story-source" oninput="syncStoryFieldFromInput('source', this.value)"
+                  class="w-full px-4 py-2 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- TAB 2: WEEKLY 150-WORD SUMMARY -->
+        <div id="editor-tab-summary" class="hidden p-6 md:p-8 rounded-2xl theme-card border space-y-4">
+          <div class="flex items-center justify-between pb-3" style="border-bottom: 1px solid var(--border-subtle)">
+            <h3 class="font-bold" style="color: var(--text-primary)">The Week, in 150 Words</h3>
+            <span id="editor-word-count-badge" class="font-mono text-xs px-2.5 py-1 rounded-full"
+              style="background-color: var(--brand-badge-bg); color: var(--accent-primary)">142 words</span>
+          </div>
+          <p class="text-xs" style="color: var(--text-muted)">Synthesize the overarching narrative tying all 5 stories
+            together into a coherent paragraph.</p>
+          <textarea id="input-weekly-summary"
+            oninput="updateWeeklySummaryCount(this.value); syncSummaryFromInput(this.value);" rows="8"
+            class="w-full px-4 py-3 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500 leading-relaxed"></textarea>
+        </div>
+
+        <!-- TAB 3: EDITOR'S NOTE & BIO -->
+        <div id="editor-tab-note" class="hidden p-6 md:p-8 rounded-2xl theme-card border space-y-5">
+          <div class="pb-3" style="border-bottom: 1px solid var(--border-subtle)">
+            <h3 class="font-bold" style="color: var(--text-primary)">From The Editor & Bio Details</h3>
+          </div>
+
+          <div>
+            <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Editor's Personal
+              Note</label>
+            <textarea id="input-editors-note" oninput="syncEditorNoteFromInput()" rows="5"
+              class="w-full px-4 py-3 rounded-xl theme-input border font-serif italic text-base focus:outline-none focus:border-indigo-500 leading-relaxed"></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4" style="border-top: 1px solid var(--border-subtle)">
+            <div>
+              <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Editor Full
+                Name</label>
+              <input type="text" id="input-editor-name" oninput="syncEditorNoteFromInput()" placeholder="Alex Sterling"
+                class="w-full px-4 py-2.5 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500">
+            </div>
+            <div>
+              <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Editor Role /
+                Title</label>
+              <input type="text" id="input-editor-role" oninput="syncEditorNoteFromInput()"
+                placeholder="Editor-in-Chief"
+                class="w-full px-4 py-2.5 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-mono text-xs uppercase mb-1.5" style="color: var(--text-muted)">Editor Avatar Image
+              URL</label>
+            <input type="text" id="input-editor-avatar" oninput="syncEditorNoteFromInput()"
+              placeholder="https://images.unsplash.com/..."
+              class="w-full px-4 py-2.5 rounded-xl theme-input border text-sm focus:outline-none focus:border-indigo-500">
+          </div>
+        </div>
+
+        <!-- TAB 4: LIVE BENTO PREVIEW -->
+        <div id="editor-tab-preview" class="hidden p-6 md:p-8 rounded-2xl theme-card border space-y-6">
+          <div class="flex items-center justify-between pb-3 flex-wrap gap-3"
+            style="border-bottom: 1px solid var(--border-subtle)">
+            <div>
+              <h3 class="font-bold text-base" style="color: var(--text-primary)">Live Bento Grid Preview</h3>
+              <p class="text-xs mt-0.5" style="color: var(--text-muted)">Comprehensive real-time preview of all five
+                Bento cards, the weekly narrative, and editor note & bio.</p>
+            </div>
+          </div>
+          <div id="bento-preview-container"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[230px]">
+            <!-- Live Preview Injected Dynamically by renderLiveBentoPreview() -->
+          </div>
+
+          <!-- Editorial Narrative & From the Editor / Bio Preview in Live Bento Preview -->
+          <section class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4"
+            style="border-top: 1px solid var(--border-subtle)">
+
+            <!-- "THE WEEK, IN 150 WORDS" Preview -->
+            <div class="p-8 rounded-2xl theme-card border flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-5">
+                  <div class="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider"
+                    style="color: var(--accent-primary)">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>The Week, in 150 Words</span>
+                  </div>
+                  <span id="preview-summary-word-count" class="font-mono text-xs px-2 py-0.5 rounded-full"
+                    style="background-color: var(--brand-badge-bg); border: 1px solid var(--border-subtle); color: var(--text-muted)">142
+                    words</span>
+                </div>
+
+                <p id="preview-weekly-summary-text" class="text-base leading-relaxed mb-6"
+                  style="color: var(--text-secondary)"></p>
+              </div>
+
+              <div class="flex items-center gap-2 text-xs font-mono" style="color: var(--text-faint)">
+                <span>✨ Curated & synthesized weekly</span>
+              </div>
+            </div>
+
+            <!-- "FROM THE EDITOR" & Bio Preview -->
+            <div class="p-8 rounded-2xl theme-card border flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2 font-mono text-xs font-bold uppercase tracking-wider mb-5"
+                  style="color: var(--accent-primary)">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  </svg>
+                  <span>From The Editor</span>
+                </div>
+
+                <p id="preview-editors-note-text" class="font-serif text-lg italic leading-relaxed mb-6"
+                  style="color: var(--text-primary)"></p>
+              </div>
+
+              <!-- Editor Signature & Bio -->
+              <div class="pt-4 border-t border-subtle flex items-center gap-3">
+                <img id="preview-editor-avatar-img" src="" alt="Alex Sterling"
+                  class="w-11 h-11 rounded-full object-cover ring-2 ring-indigo-500">
+                <div>
+                  <h4 id="preview-editor-name-display" class="font-bold text-sm" style="color: var(--text-primary)">Alex
+                    Sterling</h4>
+                  <p id="preview-editor-role-display" class="text-xs" style="color: var(--text-muted)">Editor-in-Chief
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </section>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       SIDE-PANEL ARTICLE DRAWER
+       ========================================================================= -->
+  <div id="drawer-backdrop" onclick="closeStoryDrawer()"
+    class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+  </div>
+
+  <aside id="article-drawer"
+    class="fixed top-0 right-0 bottom-0 z-50 w-full max-w-2xl transform translate-x-full transition-transform duration-300 ease-out flex flex-col shadow-2xl"
+    style="background-color: var(--bg-card); border-left: 1px solid var(--border-medium);">
+
+    <!-- Drawer Header Toolbar -->
+    <div class="sticky top-0 z-10 px-6 py-4 theme-surface backdrop-blur-md border-b flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button onclick="closeStoryDrawer()"
+          class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors cursor-pointer"
+          style="background-color: var(--brand-badge-bg); border: 1px solid var(--border-subtle); color: var(--text-muted)">✕</button>
+        <span class="font-mono text-xs font-semibold" style="color: var(--text-muted)" id="drawer-slot-num">Story #1 of
+          5</span>
+      </div>
+    </div>
+
+    <!-- Drawer Body -->
+    <div class="flex-1 overflow-y-auto p-6 md:p-8 space-y-6" id="drawer-prose-container">
+      <div class="rounded-2xl overflow-hidden" style="border: 1px solid var(--border-subtle)">
+        <img id="drawer-hero-img" src="" class="w-full max-h-72 object-cover">
+      </div>
+
+      <div class="flex items-center justify-between text-xs font-mono">
+        <span id="drawer-category" class="px-3 py-1 rounded-full uppercase font-semibold"
+          style="background-color: rgba(99, 102, 241, 0.15); color: var(--accent-primary); border: 1px solid rgba(99, 102, 241, 0.3)">AI
+          & Hardware</span>
+        <span id="drawer-read-time" style="color: var(--text-muted)">6 min read</span>
+      </div>
+
+      <h1 id="drawer-title" class="font-serif text-3xl font-bold leading-tight" style="color: var(--text-primary)"></h1>
+      <p id="drawer-subtitle" class="text-lg md:text-xl font-bold leading-relaxed"
+        style="color: var(--text-primary); font-weight: 700;"></p>
+
+      <!-- Full Prose Content -->
+      <div id="drawer-full-content" class="space-y-4 text-base leading-relaxed font-sans"
+        style="color: var(--text-secondary)"></div>
+
+      <!-- Source Attribution Box -->
+      <div class="p-4 rounded-xl flex items-center text-xs font-mono"
+        style="background-color: var(--brand-badge-bg); border: 1px solid var(--border-subtle); color: var(--text-muted)">
+        <span id="drawer-source-name"></span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       ARCHIVE MODAL
+       ========================================================================= -->
+  <div id="archive-modal"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4 hidden">
+    <div class="theme-card border rounded-3xl max-w-xl w-full max-h-[80vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="p-6 flex items-center justify-between" style="border-bottom: 1px solid var(--border-subtle)">
+        <h3 class="font-serif text-xl font-bold" style="color: var(--text-primary)">Weekly Archive</h3>
+        <button onclick="closeArchiveModal()" class="w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer"
+          style="background-color: var(--brand-badge-bg); color: var(--text-muted)">✕</button>
+      </div>
+
+      <div id="archive-editions-list" class="p-6 overflow-y-auto space-y-4 max-h-[60vh]">
+        <!-- Dynamic Edition Cards rendered by renderArchiveModalList() -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast"
+    class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl theme-card border text-xs font-mono shadow-2xl hidden flex items-center gap-2"
+    style="color: var(--text-primary)">
+    <span id="toast-text">✨ Link copied to clipboard!</span>
+  </div>
+
+  <!-- =========================================================================
+       8. JAVASCRIPT DATA & INTERACTIVITY ENGINE
+       ========================================================================= -->
+  <script>
+    const DEFAULT_EDITIONS_DATA = {
+      '069': {
+        number: '069',
+        title: 'The Frontier AI Shift',
+        tagline: 'Five stories worth your attention.',
+        date: 'Sep 4, 2026',
+        status: 'published',
+        editor: {
+          name: 'Alex Sterling',
+          role: 'Editor-in-Chief',
+          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+        },
+        summary: "This week marked a decisive pivot from brute-force model scaling to agentic reasoning architectures and localized edge execution. Across the semiconductor landscape, 2nm multi-die packaging is redefining what hardware can do in compact thermal envelopes. Meanwhile, developer toolchains are abandoning static windowed interfaces in favor of infinite generative canvases driven by context-aware AI copilots. As decentralized compute layers mature, the frontier of technology is shifting from centralized megaclusters directly to distributed intelligent endpoints.",
+        editorsNote: "We are witnessing the quiet death of the 'bigger is always better' dogma in artificial intelligence. What excites me most about this week's developments is not another trillion-parameter model locked behind an enterprise API, but how quickly small, dense models running locally on our own silicon are matching the cognitive depth of last year's cloud behemoths.",
+        stories: [
+          {
+            slot: 1,
+            title: 'The Emergence of System-2 AI: Beyond Next-Token Prediction',
+            subtitle: 'New inference-time reasoning architectures allow neural networks to plan, self-correct, and verify before producing a single token.',
+            category: 'AI & Hardware',
+            readTime: '6 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80',
+            author: 'Dr. Marcus Vance',
+            source: 'Frontier AI Research Journal',
+            sourceUrl: 'https://arxiv.org',
+            takeaways: [
+              'Inference compute scaling is replacing pre-training compute scaling as the primary performance frontier.',
+              'Chain-of-thought exploration with automated verification loops reduces hallucination rates by over 74%.',
+              'Hardware accelerators are being redesigned specifically to support dynamic branch prediction and tree search in parallel.'
+            ],
+            content: `For nearly a decade, the dominant paradigm in machine intelligence was simple: gather more tokens, construct larger transformers, and train on ever-growing supercomputer clusters. However, during the past twelve months, the scaling laws of pre-training began showing diminishing returns.<br><br>Enter <strong>System-2 reasoning architectures</strong>. Drawing inspiration from Daniel Kahneman’s dual-process cognitive theory, these new models do not merely output the most statistically probable next token instantaneously. Instead, they allocate dynamic computational budget at inference time—generating private thought chains, proposing counter-hypotheses, and verifying conclusions before presenting their response.`
+          },
+          {
+            slot: 2,
+            title: 'Local-First Revolution: 70B Models on Consumer Laptops',
+            subtitle: 'New 2-bit quantization formats and unified memory unified architectures make private on-device intelligence mainstream.',
+            category: 'Open Source',
+            readTime: '4 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop&q=80',
+            author: 'Elena Rostova',
+            source: 'LocalAI Weekly',
+            sourceUrl: 'https://github.com',
+            takeaways: [
+              'Sub-3-bit quantization techniques retain 98% of full-precision reasoning benchmarks.',
+              'Zero-latency local processing ensures absolute data privacy for confidential workflows.'
+            ],
+            content: `Running a capable foundation model once required an enterprise server rack consuming kilowatts of power. Today, researchers are executing 70-billion-parameter reasoning models directly on laptops with unified memory architectures.<br><br>Breakthroughs in adaptive ternary weights, sparse attention decomposition, and hardware-accelerated kernels have compressed model footprints by over 80% without destroying complex semantic understanding.`
+          },
+          {
+            slot: 3,
+            title: 'Silicon Arms Race: 2nm Gate-All-Around Enters Mass Tape-Out',
+            subtitle: 'Foundries achieve sub-atomic precision with nanosheet transistors, promising 30% efficiency leaps for next-gen data centers.',
+            category: 'Semiconductors',
+            readTime: '5 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80',
+            author: 'Chen Wei',
+            source: 'Semiconductor Daily',
+            sourceUrl: 'https://semiengineering.com',
+            takeaways: [
+              'Transition from FinFET to Gate-All-Around (GAA) nanosheets minimizes parasitic leakage.',
+              'High-NA Extreme Ultraviolet (EUV) systems achieve 8nm metal pitch in single runs.'
+            ],
+            content: `The limits of physics are being tested once again as the world's leading semiconductor foundries begin initial customer tape-outs for 2-nanometer gate-all-around (GAA) production lines.<br><br>By replacing traditional 3D fins with horizontally stacked nanosheets surrounded entirely by the dielectric gate, engineers have drastically curtailed current leakage at idle states.`
+          },
+          {
+            slot: 4,
+            title: 'The Death of Static UIs: Infinite Generative Canvases Take Over',
+            subtitle: 'Why rigid menus, static forms, and siloed application windows are giving way to malleable, context-reactive surfaces.',
+            category: 'Design & UX',
+            readTime: '5 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1000&auto=format&fit=crop&q=80',
+            author: 'Sarah Jenkins',
+            source: 'Design Systems Quarterly',
+            sourceUrl: 'https://uxdesign.cc',
+            takeaways: [
+              'Interfaces are transitioning from predefined static layouts to ephemeral UI synthesized per task.',
+              'Spatial zoom and fluid cards outperform nested modal menus in productivity workflows.'
+            ],
+            content: `For forty years, our primary computational metaphor has remained unchanged: the desktop window, the rectangular form, and the modal dialog. However, modern creative work is rapidly outgrowing these constraints.<br><br>Today's toolchains are converging around infinite, zoomable generative canvases. Instead of navigating seven layers of menus, users express intent naturally while the canvas constructs custom micro-interfaces in real-time.`
+          },
+          {
+            slot: 5,
+            title: 'Decentralized Compute Grids Reach Production Scale',
+            subtitle: 'Global peer-to-peer GPU networks process enterprise workloads with cryptographic proof of computation.',
+            category: 'Cloud & Infra',
+            readTime: '3 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80',
+            author: 'Devon Miller',
+            source: 'Distributed Systems Dispatch',
+            sourceUrl: 'https://infoq.com',
+            takeaways: [
+              'Decentralized GPU clusters achieve 60% lower hourly rental rates than cloud monopolies.',
+              'Zero-knowledge verification ensures cryptographic correctness of remote gradient updates.'
+            ],
+            content: `The global demand for high-end machine learning compute has created an acute supply crunch. In response, decentralized compute networks have graduated from speculative experiments to robust enterprise alternatives.<br><br>By aggregating dormant computing capacity from rendering studios and independent data centers, these protocols create a liquid compute marketplace.`
+          }
+        ]
+      },
+      '068': {
+        number: '068',
+        title: 'Quantum Supremacy in Practice',
+        tagline: 'Five breakthroughs reshaping computation.',
+        date: 'Aug 28, 2026',
+        status: 'published',
+        editor: {
+          name: 'Alex Sterling',
+          role: 'Editor-in-Chief',
+          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+        },
+        summary: "This week observed the first verifiable quantum error mitigation deployment performing real-world material science simulations that classical superclusters cannot replicate within feasible timeframes. Alongside superconducting breakthroughs, optical interconnects are accelerating distributed data center throughput by 400%, while browser sandboxes receive hardware-level memory isolation. We are entering an era where heterogeneous quantum-classical hybrid architectures solve commercial molecular catalysts.",
+        editorsNote: "The transition from laboratory curiosities to commercial utility is always subtle before it is sudden. Watching fault-tolerant quantum algorithms model complex nitrogenase enzymes this week gave us a vivid glimpse into the post-classical computing century.",
+        stories: [
+          {
+            slot: 1,
+            title: 'Fault-Tolerant Quantum Simulation Reaches Practical Quantum Advantage',
+            subtitle: 'Logical qubits with real-time topological error correction model complex biochemical molecules beyond supercomputer limits.',
+            category: 'Quantum Computing',
+            readTime: '7 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&auto=format&fit=crop&q=80',
+            author: 'Dr. Helene Kogan',
+            source: 'Quantum Physical Review',
+            sourceUrl: 'https://nature.com',
+            takeaways: [
+              '1,000 logical qubits achieved via neutral-atom shuttling arrays.',
+              'Simulation of biological nitrogen fixation computed in 14 minutes vs 2,000 classical compute years.',
+              'Hybrid quantum-classical API layers enable automated job scheduling for chemistry labs.'
+            ],
+            content: `For decades, quantum computing has lived under the shadow of noisy intermediate-scale quantum (NISQ) devices. This week, a joint consortium demonstrated continuous topological error correction maintaining quantum state coherence for over two hours.<br><br>The practical upshot is profound: simulating complex molecular dynamics without exponential decay of quantum state fidelity.`
+          },
+          {
+            slot: 2,
+            title: 'Co-Packaged Optics Slash Data Center Power by 40%',
+            subtitle: 'Silicon photonics directly integrated onto accelerator dies replace copper traces to conquer the thermal wall.',
+            category: 'Cloud & Infra',
+            readTime: '4 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&auto=format&fit=crop&q=80',
+            author: 'Kavita Raman',
+            source: 'Photonics Systems',
+            sourceUrl: 'https://ieee.org',
+            takeaways: [
+              'Direct optical transceivers eliminate DSP re-timers.',
+              'Reduces inter-rack latency to sub-nanosecond scale.'
+            ],
+            content: `As AI training clusters exceed 100,000 accelerators, the electrical power consumed merely moving bits across copper wires has reached unsustainable levels. Silicon photonics integration brings laser modulators right onto the substrate die.`
+          },
+          {
+            slot: 3,
+            title: 'Formal Verification for AI-Generated Kernels',
+            subtitle: 'Automated theorem provers ensure zero-exploit guarantees for autonomous code synthesis.',
+            category: 'Open Source',
+            readTime: '5 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80',
+            author: "Liam O'Connor",
+            source: 'Formal Methods Digest',
+            sourceUrl: 'https://acm.org',
+            takeaways: [
+              'Coq and Lean theorem provers verify synthesized LLVM IR automatically.',
+              '100% eradication of buffer overflow vectors in kernel space.'
+            ],
+            content: `Synthesizing code with AI is effortless; proving that code is memory-safe and free of subtle vulnerabilities is where the real engineering begins. New verification engines synthesize formal mathematical proofs alongside executable binaries.`
+          },
+          {
+            slot: 4,
+            title: 'Solid-State Batteries Enter Pilot Electric Flight Testing',
+            subtitle: 'Ceramic electrolyte packs achieve 520 Wh/kg energy density, enabling quiet regional aviation corridors.',
+            category: 'Clean Tech',
+            readTime: '5 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=1000&auto=format&fit=crop&q=80',
+            author: 'Jean-Paul Dubois',
+            source: 'Aviation Week Future',
+            sourceUrl: 'https://aviationweek.com',
+            takeaways: [
+              'Non-flammable solid ceramic separator withstands extreme thermal stress.',
+              'Enables 600-mile zero-emission regional passenger routes by 2028.'
+            ],
+            content: `Aviation has long been the hardest sector to decarbonize due to the stringent gravimetric energy density requirements of flight. This week’s FAA certification test flights of solid-state lithium metal cells demonstrate that battery-electric regional aviation is ready for takeoff.`
+          },
+          {
+            slot: 5,
+            title: 'Neuromorphic Vision Sensors Outperform High-Speed Cameras',
+            subtitle: 'Event-based asynchronous pixels deliver microsecond motion tracking for humanoid robotic reflexes.',
+            category: 'Robotics',
+            readTime: '3 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&auto=format&fit=crop&q=80',
+            author: 'Yuki Tanaka',
+            source: 'Robotics Spectrum',
+            sourceUrl: 'https://spectrum.ieee.org',
+            takeaways: [
+              'Dynamic vision sensors only transmit luminance changes, reducing bandwidth 95%.',
+              'Microsecond response times prevent kinematic balance loss.'
+            ],
+            content: `Unlike conventional cameras that record redundant frames 60 times a second, neuromorphic bio-inspired sensors only register changes in light at individual pixels asynchronously, enabling lightning-fast reflexes.`
+          }
+        ]
+      },
+      '067': {
+        number: '067',
+        title: 'Spatial Computing & Realities',
+        tagline: 'Five perspectives on the next human-computer interface.',
+        date: 'Aug 21, 2026',
+        status: 'published',
+        editor: {
+          name: 'Alex Sterling',
+          role: 'Editor-in-Chief',
+          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+        },
+        summary: "This edition explores the inflection point where spatial displays shed their bulky enclosures to match conventional eyewear form factors. Breakthroughs in diffractive waveguide optics, paired with neural micro-gesture sensors and foveated holographic projection, are turning ambient computing into an invisible everyday utility. Simultaneously, open spatial protocols are ensuring decentralized 3D asset interoperability across the web.",
+        editorsNote: "When technology truly succeeds, it disappears from our conscious awareness. The shift toward ultra-lightweight optical waveguides means we will soon interact with spatial information as naturally as we glance at a wristwatch or a printed book.",
+        stories: [
+          {
+            slot: 1,
+            title: 'Waveguide Optics Deliver All-Day Lightweight Eyewear',
+            subtitle: 'Diffractive surface-relief gratings enable 100-degree field of view in glasses weighing under 65 grams.',
+            category: 'Design & UX',
+            readTime: '6 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=1200&auto=format&fit=crop&q=80',
+            author: 'Aria Montgomery',
+            source: 'Spatial Interface Review',
+            sourceUrl: 'https://theverge.com',
+            takeaways: [
+              '65-gram titanium frame with 18-hour continuous battery endurance.',
+              'Micro-LED light engines output 5,000 nits for seamless outdoor visibility.',
+              'Foveated neural rendering compresses spatial video bandwidth by 85%.'
+            ],
+            content: `For years, augmented reality has been hindered by bulky ski-goggle form factors. Breakthroughs in high-refractive index resin waveguides have finally allowed photonics engineers to fit immersive wide-field displays into classic eyewear frames.`
+          },
+          {
+            slot: 2,
+            title: 'Neural EMG Wristbands Replace Hand Tracking Cameras',
+            subtitle: 'Detecting motor neuron impulses at the wrist provides sub-millimeter input without camera line-of-sight.',
+            category: 'AI & Hardware',
+            readTime: '4 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1510519138197-06b862a29411?w=800&auto=format&fit=crop&q=80',
+            author: 'Mateo Silva',
+            source: 'BioSensing Quarterly',
+            sourceUrl: 'https://wired.com',
+            takeaways: [
+              'Detects micro-gestures even with hands in pockets.',
+              'Zero optical occlusion issues in bright sunlight.'
+            ],
+            content: `Surface electromyography (sEMG) reads the electrical signals sent from your brain to your fingers before movement occurs, allowing effortless navigation through spatial interfaces with invisible micro-taps.`
+          },
+          {
+            slot: 3,
+            title: 'Universal Spatial Scene Standard Adopted by Web Consortia',
+            subtitle: 'Open standard glTF 3.0 and WebSpatial APIs bring native interactive 3D objects to every browser.',
+            category: 'Open Source',
+            readTime: '4 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&auto=format&fit=crop&q=80',
+            author: 'Lars Lindqvist',
+            source: 'W3C Spatial WG',
+            sourceUrl: 'https://w3.org',
+            takeaways: [
+              'Instant streaming of volumetric scenes without plugin dependencies.',
+              'Cryptographic provenance and decentralized 3D asset metadata.'
+            ],
+            content: `The web is expanding from 2D canvases into the physical room. With the ratification of WebSpatial 1.0, developers can embed 3D spatial volumes directly within standard HTML markup.`
+          },
+          {
+            slot: 4,
+            title: 'Autonomous Micro-Grids Outperform Centralized Utilities in Resilience',
+            subtitle: 'Neighborhood-scale solar and flow-battery meshes maintain 99.999% uptime during regional grid disruptions.',
+            category: 'Clean Tech',
+            readTime: '5 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?w=1000&auto=format&fit=crop&q=80',
+            author: 'Nadia Al-Mansoor',
+            source: 'Energy Grid Today',
+            sourceUrl: 'https://greentechmedia.com',
+            takeaways: [
+              'P2P energy trading over localized zero-loss DC distribution loops.',
+              'Iron-redox flow batteries eliminate degradation over 30-year lifecycle.'
+            ],
+            content: `Extreme weather events have exposed the fragility of centralized electrical grids. Distributed neighborhood microgrids equipped with automated load-balancing software isolate and self-heal in milliseconds.`
+          },
+          {
+            slot: 5,
+            title: 'Rust in the Linux Kernel: 10 Major Drivers Rewritten',
+            subtitle: 'Zero-cost memory safety abstractions eliminate a whole class of concurrency race conditions.',
+            category: 'Semiconductors',
+            readTime: '3 min read',
+            imageUrl: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=80',
+            author: 'Goran Petrovic',
+            source: 'Kernel Traffic',
+            sourceUrl: 'https://lwn.net',
+            takeaways: [
+              'NVMe and PCIe driver rewrites show parity with C while eliminating panic states.',
+              'Strict borrow checker enforces compile-time synchronization guarantees.'
+            ],
+            content: `The steady integration of Rust into mainline Linux is proving that safety and bare-metal performance need not be an either-or choice. Ten core storage and networking drivers have officially achieved full production parity.`
+          }
+        ]
+      }
+    };
+
+    const EDITIONS_STORAGE_KEY = 'wtj_editions_data_v2';
+
+    const REMOVED_EDITIONS = new Set(['70', '070', '73', '073', '74', '074', '80', '080', '81', '081']);
+
+    function sanitizeEditionsData(data) {
+      const sanitized = {};
+      // Ensure default editions exist cleanly
+      Object.keys(DEFAULT_EDITIONS_DATA).forEach(k => {
+        if (!REMOVED_EDITIONS.has(k)) {
+          sanitized[k] = JSON.parse(JSON.stringify(DEFAULT_EDITIONS_DATA[k]));
+        }
+      });
+
+      // Merge and canonicalize stored editions by their unique edition number
+      if (data && typeof data === 'object') {
+        Object.keys(data).forEach(k => {
+          const ed = data[k];
+          if (!ed || typeof ed !== 'object') return;
+          const cleanNum = String(ed.number || k).replace(/^#/, '').trim();
+          if (!cleanNum || REMOVED_EDITIONS.has(cleanNum) || REMOVED_EDITIONS.has(String(parseInt(cleanNum, 10)))) return;
+
+          if (DEFAULT_EDITIONS_DATA[cleanNum]) {
+            // Merge stored updates onto default edition
+            sanitized[cleanNum] = Object.assign({}, DEFAULT_EDITIONS_DATA[cleanNum], ed, { number: cleanNum });
+          } else {
+            // Custom edition keyed by canonical number
+            sanitized[cleanNum] = Object.assign({}, ed, { number: cleanNum });
+          }
+        });
+      }
+      return sanitized;
+    }
+
+    function loadInitialEditionsData() {
+      try {
+        const stored = localStorage.getItem(EDITIONS_STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed && typeof parsed === 'object') {
+            const cleaned = sanitizeEditionsData(parsed);
+            try {
+              localStorage.setItem(EDITIONS_STORAGE_KEY, JSON.stringify(cleaned));
+            } catch (e) { }
+            return cleaned;
+          }
+        }
+      } catch (e) { }
+      return JSON.parse(JSON.stringify(DEFAULT_EDITIONS_DATA));
+    }
+
+    const EDITIONS_DATA = loadInitialEditionsData();
+    const DRAFTS_STORAGE_KEY = 'wtj_drafts_data_v2';
+
+    function loadInitialDraftsData() {
+      try {
+        const stored = localStorage.getItem(DRAFTS_STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (parsed && typeof parsed === 'object') {
+            const cleaned = {};
+            Object.keys(parsed).forEach(k => {
+              const cleanNum = String(parsed[k]?.number || k).replace(/^#/, '').trim();
+              if (!cleanNum || REMOVED_EDITIONS.has(cleanNum) || REMOVED_EDITIONS.has(String(parseInt(cleanNum, 10)))) return;
+              cleaned[cleanNum] = parsed[k];
+            });
+            return cleaned;
+          }
+        }
+      } catch (e) { }
+      return JSON.parse(JSON.stringify(EDITIONS_DATA));
+    }
+
+    let DRAFT_EDITIONS_DATA = loadInitialDraftsData();
+
+    function persistDraftsData() {
+      try {
+        localStorage.setItem(DRAFTS_STORAGE_KEY, JSON.stringify(DRAFT_EDITIONS_DATA));
+      } catch (e) { }
+    }
+
+    let publishedEditionId = '069';
+    let editingEditionId = '069';
+    let currentMode = 'reader'; // 'reader' | 'editor'
+    let selectedEditorSlot = 1; // 1 to 5
+
+    function getDraftEdition() {
+      if (!DRAFT_EDITIONS_DATA[editingEditionId]) {
+        if (EDITIONS_DATA[editingEditionId]) {
+          DRAFT_EDITIONS_DATA[editingEditionId] = JSON.parse(JSON.stringify(EDITIONS_DATA[editingEditionId]));
+        } else {
+          DRAFT_EDITIONS_DATA[editingEditionId] = JSON.parse(JSON.stringify(DEFAULT_EDITIONS_DATA['069']));
+        }
+      }
+      return DRAFT_EDITIONS_DATA[editingEditionId];
+    }
+
+    // Helper: Persist EDITIONS_DATA to localStorage
+    function persistEditionsData() {
+      try {
+        localStorage.setItem(EDITIONS_STORAGE_KEY, JSON.stringify(EDITIONS_DATA));
+      } catch (e) { }
+    }
+
+    // Helper: Word count
+    function countWords(str) {
+      return str ? str.trim().split(/\s+/).filter(Boolean).length : 0;
+    }
+
+    function updateWeeklySummaryCount(val) {
+      const count = countWords(val);
+      const badge = document.getElementById('editor-word-count-badge');
+      if (badge) badge.innerText = `${count} words`;
+      updatePublishingChecklist();
+    }
+
+    // Render Reader Bento Grid (Strictly Published Edition)
+    function renderBentoGrid() {
+      const edition = EDITIONS_DATA[publishedEditionId];
+      if (!edition) return;
+
+      document.getElementById('header-edition-number').innerText = `#${edition.number}`;
+      document.getElementById('masthead-issue-num').innerText = `#${edition.number}`;
+      document.getElementById('masthead-date').innerText = edition.date;
+      document.getElementById('masthead-title').innerText = edition.title;
+      document.getElementById('masthead-tagline').innerText = edition.tagline;
+
+      document.getElementById('weekly-summary-text').innerText = edition.summary;
+      document.getElementById('summary-word-count').innerText = `${countWords(edition.summary)} words`;
+      document.getElementById('editors-note-text').innerText = `"${edition.editorsNote}"`;
+
+      const editorInfo = edition.editor || {
+        name: 'Alex Sterling',
+        role: 'Editor-in-Chief',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+      };
+      const editorNameEl = document.getElementById('editor-name-display');
+      const editorRoleEl = document.getElementById('editor-role-display');
+      const editorAvatarEl = document.getElementById('editor-avatar-img');
+
+      if (editorNameEl) editorNameEl.innerText = editorInfo.name || 'Alex Sterling';
+      if (editorRoleEl) editorRoleEl.innerText = editorInfo.role || 'Editor-in-Chief';
+      if (editorAvatarEl && editorInfo.avatar) editorAvatarEl.src = editorInfo.avatar;
+
+      const container = document.getElementById('bento-grid-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      edition.stories.forEach((story, index) => {
+        let slotClass = 'lg:col-span-1 lg:row-span-1';
+        let isHero = false;
+        let isWide = false;
+
+        if (story.slot === 1) {
+          slotClass = 'lg:col-span-2 lg:row-span-2';
+          isHero = true;
+        } else if (story.slot === 4) {
+          slotClass = 'lg:col-span-2 lg:row-span-1';
+          isWide = true;
+        }
+
+        const card = document.createElement('article');
+        card.className = `${slotClass} relative rounded-3xl overflow-hidden group cursor-pointer theme-card border hover:-translate-y-1 shadow-2xl flex flex-col justify-between p-6 md:p-8`;
+        card.onclick = () => openStoryDrawer(index);
+
+        card.innerHTML = `
+          <div class="absolute inset-0 z-0 overflow-hidden">
+            <img src="${story.imageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80'}" alt="${story.title || 'Tech Story'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+          </div>
+          <div class="absolute inset-0 z-1 bg-gradient-to-t from-[#090a0d]/95 via-[#090a0d]/65 to-[#090a0d]/25"></div>
+
+          <div class="relative z-10 flex flex-col justify-between h-full">
+            <div class="flex items-center justify-between mb-auto">
+              <span class="inline-flex items-center px-3 py-1 rounded-full font-mono text-xs font-semibold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 backdrop-blur-md">
+                ${story.category || 'Technology'}
+              </span>
+              <span class="font-mono text-xs font-bold text-white/80 px-2 py-0.5 rounded" style="background-color: var(--badge-slot-bg)">#${story.slot}${isHero ? ' Lead Story' : ''}</span>
+            </div>
+
+            <div>
+              <h2 class="font-serif ${isHero ? 'text-2xl md:text-3xl lg:text-4xl' : (isWide ? 'text-xl md:text-2xl' : 'text-lg')} font-bold text-white leading-tight mb-2">
+                ${story.title || 'Untitled Story'}
+              </h2>
+              ${story.subtitle && (isHero || isWide) ? `<p class="text-slate-200 text-sm leading-relaxed line-clamp-2 mb-4">${story.subtitle}</p>` : ''}
+
+              <div class="flex items-center justify-between pt-3 border-t border-white/20 text-xs font-mono text-slate-200">
+                <span>${story.author || 'Staff Writer'}</span>
+                <div class="flex items-center gap-2">
+                  <span>⏱️ ${story.readTime || '4 min read'}</span>
+                  <span class="text-indigo-400 font-bold group-hover:translate-x-1 transition-transform">Read →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Toggle View Mode (Reader vs Editor)
+    function toggleViewMode() {
+      if (currentMode === 'reader') {
+        showEditorView();
+      } else {
+        showReaderView();
+      }
+    }
+
+    function showEditorView() {
+      currentMode = 'editor';
+      document.getElementById('reader-view-container').classList.add('hidden');
+      document.getElementById('editor-panel-container').classList.remove('hidden');
+      document.getElementById('view-mode-label').innerText = '📖 Reader View';
+      document.getElementById('view-mode-btn').classList.remove('bg-indigo-600');
+      document.getElementById('view-mode-btn').classList.add('bg-purple-600');
+
+      // Populate editor fields from working draft
+      loadEditorFields();
+    }
+
+    function showReaderView() {
+      currentMode = 'reader';
+      document.getElementById('editor-panel-container').classList.add('hidden');
+      document.getElementById('reader-view-container').classList.remove('hidden');
+      document.getElementById('view-mode-label').innerText = '✏️ Editor Panel';
+      document.getElementById('view-mode-btn').classList.remove('bg-purple-600');
+      document.getElementById('view-mode-btn').classList.add('bg-indigo-600');
+
+      // Render strictly published edition
+      renderBentoGrid();
+    }
+
+    // Helper: Date format conversions for native calendar picker
+    function parseStringToIsoDate(dateStr) {
+      if (!dateStr) return '';
+      if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+      const parsed = new Date(dateStr);
+      if (!isNaN(parsed.getTime())) {
+        const y = parsed.getFullYear();
+        const m = String(parsed.getMonth() + 1).padStart(2, '0');
+        const d = String(parsed.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+      }
+      return '';
+    }
+
+    function formatCalendarDateToString(isoStr) {
+      if (!isoStr) return '';
+      const parts = isoStr.split('-');
+      if (parts.length === 3) {
+        const y = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10) - 1;
+        const d = parseInt(parts[2], 10);
+        const dt = new Date(y, m, d);
+        if (!isNaN(dt.getTime())) {
+          return dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+      }
+      return isoStr;
+    }
+
+    function handleDateCalendarChange(isoVal) {
+      const formatted = formatCalendarDateToString(isoVal);
+      updateEditionField('date', formatted);
+      const draft = getDraftEdition();
+      if (draft) draft.date = formatted;
+      updatePublishingChecklist();
+    }
+
+    // Dynamic Issue # Dropdown Populator & Handler
+    function populateIssueDropdown() {
+      const selectEl = document.getElementById('input-edition-number');
+      if (!selectEl) return;
+
+      const currentActiveNum = String(getDraftEdition()?.number || editingEditionId).replace(/^#/, '').trim();
+
+      const uniqueEditions = [];
+      const seenNumbers = new Set();
+
+      const allKeys = Array.from(new Set([...Object.keys(EDITIONS_DATA), ...Object.keys(DRAFT_EDITIONS_DATA)]));
+      const sortedKeys = allKeys.sort((a, b) => {
+        const numA = parseInt(String(EDITIONS_DATA[a]?.number || DRAFT_EDITIONS_DATA[a]?.number || a).replace(/\D/g, ''), 10) || 0;
+        const numB = parseInt(String(EDITIONS_DATA[b]?.number || DRAFT_EDITIONS_DATA[b]?.number || b).replace(/\D/g, ''), 10) || 0;
+        return numB - numA;
+      });
+
+      sortedKeys.forEach(key => {
+        const ed = DRAFT_EDITIONS_DATA[key] || EDITIONS_DATA[key];
+        if (!ed) return;
+        const cleanNum = String(ed.number || key).replace(/^#/, '').trim();
+        if (seenNumbers.has(cleanNum) || REMOVED_EDITIONS.has(cleanNum)) return;
+        seenNumbers.add(cleanNum);
+        uniqueEditions.push({ key, ed, cleanNum });
+      });
+
+      selectEl.innerHTML = '';
+
+      uniqueEditions.forEach(({ cleanNum }) => {
+        const opt = document.createElement('option');
+        opt.value = cleanNum;
+        opt.innerText = `#${cleanNum}`;
+        if (cleanNum === currentActiveNum) {
+          opt.selected = true;
+        }
+        selectEl.appendChild(opt);
+      });
+
+      // Option to create new edition draft
+      const newOpt = document.createElement('option');
+      newOpt.value = '__new__';
+      newOpt.innerText = '+ New Draft';
+      selectEl.appendChild(newOpt);
+
+      if (currentActiveNum && uniqueEditions.some(e => e.cleanNum === currentActiveNum)) {
+        selectEl.value = currentActiveNum;
+      }
+    }
+
+    function handleIssueDropdownChange(val) {
+      if (val === '__new__') {
+        createNewEditionDraft();
+        return;
+      }
+      editingEditionId = val;
+      if (!DRAFT_EDITIONS_DATA[editingEditionId] && EDITIONS_DATA[editingEditionId]) {
+        DRAFT_EDITIONS_DATA[editingEditionId] = JSON.parse(JSON.stringify(EDITIONS_DATA[editingEditionId]));
+      }
+      loadEditorFields();
+      renderLiveBentoPreview();
+      showToastNotification(`Switched to Edition #${val} in Editor`);
+    }
+
+    function createNewEditionDraft() {
+      let maxNum = 69;
+      const allKeys = new Set([...Object.keys(EDITIONS_DATA), ...Object.keys(DRAFT_EDITIONS_DATA)]);
+      allKeys.forEach(k => {
+        const ed = EDITIONS_DATA[k] || DRAFT_EDITIONS_DATA[k];
+        const n = parseInt(String(ed?.number || k).replace(/\D/g, ''), 10);
+        if (!isNaN(n) && n > maxNum && !REMOVED_EDITIONS.has(String(n)) && !REMOVED_EDITIONS.has(String(n).padStart(3, '0'))) {
+          maxNum = n;
+        }
+      });
+      let nextN = maxNum + 1;
+      while (REMOVED_EDITIONS.has(String(nextN)) || REMOVED_EDITIONS.has(String(nextN).padStart(3, '0'))) {
+        nextN++;
+      }
+      const nextNum = String(nextN).padStart(3, '0');
+      const todayIso = new Date().toISOString().split('T')[0];
+      const todayFormatted = formatCalendarDateToString(todayIso);
+
+      const newDraft = {
+        number: nextNum,
+        title: 'New Frontier Edition',
+        tagline: 'Five stories worth your attention.',
+        date: todayFormatted,
+        status: 'draft',
+        editor: {
+          name: 'Alex Sterling',
+          role: 'Editor-in-Chief',
+          avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+        },
+        summary: 'A connected overview of this week’s most pivotal developments in computing, hardware, and engineering.',
+        editorsNote: 'From the desk of the editor: personal insights on the defining tech shifts of the week.',
+        stories: [
+          { slot: 1, title: 'Lead Breakthrough Headline', subtitle: 'Comprehensive summary of the major breakthrough defining the tech industry.', category: 'Artificial Intelligence', readTime: '5 min read', imageUrl: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80', author: 'Alex Sterling', source: 'Frontier Tech', sourceUrl: '', content: 'Enter the full prose narrative for this breakthrough story here.' },
+          { slot: 2, title: 'Second Strategic Update', subtitle: 'Detailed analysis of emerging software tools and architectures.', category: 'Open Source', readTime: '4 min read', imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&auto=format&fit=crop&q=80', author: 'Elena Rostova', source: 'Open Tech', sourceUrl: '', content: 'Extended prose for story #2.' },
+          { slot: 3, title: 'Hardware & Silicon Advancement', subtitle: 'Key architecture evolutions scaling performance.', category: 'Semiconductors', readTime: '4 min read', imageUrl: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80', author: 'Chen Wei', source: 'Silicon Wire', sourceUrl: '', content: 'Extended prose for story #3.' },
+          { slot: 4, title: 'Design & Interface Systems', subtitle: 'Fluid generative canvas metaphors and design.', category: 'Design & UX', readTime: '3 min read', imageUrl: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=1000&auto=format&fit=crop&q=80', author: 'Sarah Jenkins', source: 'Design Hub', sourceUrl: '', content: 'Extended prose for story #4.' },
+          { slot: 5, title: 'Distributed Systems & Infrastructure', subtitle: 'Modern cloud infrastructure benchmarks.', category: 'Cloud & Infra', readTime: '4 min read', imageUrl: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80', author: 'Devon Miller', source: 'Infra Weekly', sourceUrl: '', content: 'Extended prose for story #5.' }
+        ]
+      };
+
+      editingEditionId = nextNum;
+      DRAFT_EDITIONS_DATA[nextNum] = JSON.parse(JSON.stringify(newDraft));
+      persistDraftsData();
+
+      populateIssueDropdown();
+      loadEditorFields();
+      renderLiveBentoPreview();
+      showToastNotification(`✨ Created Draft #${nextNum}!`);
+    }
+
+    // Load Editor Fields from Draft
+    function loadEditorFields() {
+      const edition = getDraftEdition();
+      if (!edition) return;
+
+      populateIssueDropdown();
+      document.getElementById('input-edition-title').value = edition.title || '';
+      document.getElementById('input-edition-number').value = edition.number || editingEditionId;
+      document.getElementById('input-edition-date').value = parseStringToIsoDate(edition.date || '');
+      document.getElementById('input-weekly-summary').value = edition.summary || '';
+      document.getElementById('editor-word-count-badge').innerText = `${countWords(edition.summary)} words`;
+      document.getElementById('input-editors-note').value = edition.editorsNote || '';
+
+      const editorInfo = edition.editor || {
+        name: 'Alex Sterling',
+        role: 'Editor-in-Chief',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+      };
+      const nameInput = document.getElementById('input-editor-name');
+      const roleInput = document.getElementById('input-editor-role');
+      const avatarInput = document.getElementById('input-editor-avatar');
+
+      if (nameInput) nameInput.value = editorInfo.name || '';
+      if (roleInput) roleInput.value = editorInfo.role || '';
+      if (avatarInput) avatarInput.value = editorInfo.avatar || '';
+
+      loadStoryEditorSlot(selectedEditorSlot);
+      updatePublishingChecklist();
+    }
+
+    function loadStoryEditorSlot(slot) {
+      selectedEditorSlot = slot;
+      const edition = getDraftEdition();
+      const story = edition?.stories?.find(s => s.slot === slot) || edition?.stories?.[0];
+
+      // Update slot tabs
+      [1, 2, 3, 4, 5].forEach(num => {
+        const btn = document.getElementById(`slot-btn-${num}`);
+        if (btn) {
+          if (num === slot) {
+            btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white cursor-pointer';
+            btn.style.backgroundColor = '';
+            btn.style.color = '';
+          } else {
+            btn.className = 'px-3.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer';
+            btn.style.backgroundColor = 'var(--brand-badge-bg)';
+            btn.style.color = 'var(--text-muted)';
+          }
+        }
+      });
+
+      const slotLabels = {
+        1: '#1 Lead',
+        2: '#2 Story',
+        3: '#3 Story',
+        4: '#4 Wide',
+        5: '#5 Story'
+      };
+      const slotInd = document.getElementById('current-slot-indicator');
+      if (slotInd) slotInd.innerText = slotLabels[slot] || `#${slot}`;
+
+      if (story) {
+        document.getElementById('input-story-title').value = story.title || '';
+        document.getElementById('input-story-subtitle').value = story.subtitle || '';
+        document.getElementById('input-story-category').value = story.category || 'Artificial Intelligence';
+        document.getElementById('input-story-time').value = story.readTime || '5 min read';
+        document.getElementById('input-story-image').value = story.imageUrl || '';
+        document.getElementById('input-story-content').value = (story.content || '').replace(/<br\s*[\/]?>/gi, '\n');
+        document.getElementById('input-story-author').value = story.author || '';
+        document.getElementById('input-story-source').value = story.source || '';
+      }
+    }
+
+    function selectStorySlot(slot) {
+      loadStoryEditorSlot(slot);
+    }
+
+    // Real-time Story Field Sync (Updates DRAFT automatically)
+    function syncStoryFieldFromInput(field, value) {
+      const edition = getDraftEdition();
+      if (!edition || !edition.stories) return;
+      const story = edition.stories.find(s => s.slot === selectedEditorSlot);
+      if (story) {
+        if (field === 'content') {
+          story.content = (value || '').replace(/\n/g, '<br>');
+        } else {
+          story[field] = value;
+        }
+      }
+      persistDraftsData();
+      updatePublishingChecklist();
+    }
+
+    // Real-time Weekly Summary Sync (Updates DRAFT automatically)
+    function syncSummaryFromInput(value) {
+      getDraftEdition().summary = value;
+      persistDraftsData();
+      updatePublishingChecklist();
+    }
+
+    // Real-time Editor Note & Bio Sync (Updates DRAFT automatically)
+    function syncEditorNoteFromInput() {
+      const noteText = document.getElementById('input-editors-note')?.value || '';
+      const editorName = document.getElementById('input-editor-name')?.value || 'Alex Sterling';
+      const editorRole = document.getElementById('input-editor-role')?.value || 'Editor-in-Chief';
+      const editorAvatar = document.getElementById('input-editor-avatar')?.value || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80';
+
+      const draft = getDraftEdition();
+      draft.editorsNote = noteText;
+      draft.editor = {
+        name: editorName,
+        role: editorRole,
+        avatar: editorAvatar
+      };
+      persistDraftsData();
+      updatePublishingChecklist();
+    }
+
+    function updateEditionField(field, value) {
+      const draft = getDraftEdition();
+      if (!draft) return;
+      if (field === 'number') {
+        const cleanVal = String(value).replace(/^#/, '').trim();
+        draft.number = cleanVal;
+      } else {
+        draft[field] = value;
+      }
+      persistDraftsData();
+      updatePublishingChecklist();
+    }
+
+    function swapStorySlot(direction) {
+      const edition = getDraftEdition();
+      if (!edition || !edition.stories) return;
+      const currentSlot = selectedEditorSlot;
+      const targetSlot = direction === 'up' ? currentSlot - 1 : currentSlot + 1;
+      if (targetSlot < 1 || targetSlot > 5) return;
+
+      const storyA = edition.stories.find(s => s.slot === currentSlot);
+      const storyB = edition.stories.find(s => s.slot === targetSlot);
+      if (storyA && storyB) {
+        storyA.slot = targetSlot;
+        storyB.slot = currentSlot;
+      }
+      persistDraftsData();
+      loadStoryEditorSlot(targetSlot);
+      showToastNotification(`Swapped Story #${currentSlot} with Story #${targetSlot} in draft`);
+    }
+
+    // Switch Editor Sub-Tabs
+    function switchEditorTab(tab) {
+      ['stories', 'summary', 'note', 'preview'].forEach(t => {
+        document.getElementById(`editor-tab-${t}`).classList.add('hidden');
+        const btn = document.getElementById(`tab-btn-${t}`);
+        btn.className = 'px-4 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer';
+        btn.style.backgroundColor = 'var(--brand-badge-bg)';
+        btn.style.color = 'var(--text-muted)';
+      });
+
+      const activeBtn = document.getElementById(`tab-btn-${tab}`);
+      document.getElementById(`editor-tab-${tab}`).classList.remove('hidden');
+      activeBtn.className = 'px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition-all cursor-pointer';
+      activeBtn.style.backgroundColor = '';
+      activeBtn.style.color = '';
+
+      if (tab === 'preview') {
+        renderLiveBentoPreview();
+      }
+    }
+
+    // =========================================================================
+    // 4. LIVE BENTO PREVIEW ENGINE (REFLECTS LIVE DRAFT IN REAL TIME)
+    // =========================================================================
+    function renderLiveBentoPreview() {
+      // Sync any active form inputs into draft before rendering preview
+      const activeSlotStory = getDraftEdition()?.stories?.find(s => s.slot === selectedEditorSlot);
+      if (activeSlotStory) {
+        const t = document.getElementById('input-story-title')?.value;
+        const st = document.getElementById('input-story-subtitle')?.value;
+        const cat = document.getElementById('input-story-category')?.value;
+        const time = document.getElementById('input-story-time')?.value;
+        const img = document.getElementById('input-story-image')?.value;
+        const cont = document.getElementById('input-story-content')?.value;
+        const auth = document.getElementById('input-story-author')?.value;
+        const src = document.getElementById('input-story-source')?.value;
+
+        if (t !== undefined) activeSlotStory.title = t;
+        if (st !== undefined) activeSlotStory.subtitle = st;
+        if (cat !== undefined) activeSlotStory.category = cat;
+        if (time !== undefined) activeSlotStory.readTime = time;
+        if (img !== undefined) activeSlotStory.imageUrl = img;
+        if (cont !== undefined) activeSlotStory.content = cont.replace(/\n/g, '<br>');
+        if (auth !== undefined) activeSlotStory.author = auth;
+        if (src !== undefined) activeSlotStory.source = src;
+      }
+
+      const sumVal = document.getElementById('input-weekly-summary')?.value;
+      if (sumVal !== undefined) getDraftEdition().summary = sumVal;
+
+      const noteVal = document.getElementById('input-editors-note')?.value;
+      if (noteVal !== undefined) getDraftEdition().editorsNote = noteVal;
+
+      const edNameVal = document.getElementById('input-editor-name')?.value;
+      const edRoleVal = document.getElementById('input-editor-role')?.value;
+      const edAvatarVal = document.getElementById('input-editor-avatar')?.value;
+      if (getDraftEdition().editor) {
+        if (edNameVal) getDraftEdition().editor.name = edNameVal;
+        if (edRoleVal) getDraftEdition().editor.role = edRoleVal;
+        if (edAvatarVal) getDraftEdition().editor.avatar = edAvatarVal;
+      }
+
+      const container = document.getElementById('bento-preview-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const edition = getDraftEdition();
+      if (!edition || !edition.stories) return;
+
+      // Render 5 Bento Cards
+      edition.stories.forEach((story, index) => {
+        let slotClass = 'lg:col-span-1 lg:row-span-1';
+        let isHero = false;
+        let isWide = false;
+
+        if (story.slot === 1) {
+          slotClass = 'lg:col-span-2 lg:row-span-2';
+          isHero = true;
+        } else if (story.slot === 4) {
+          slotClass = 'lg:col-span-2 lg:row-span-1';
+          isWide = true;
+        }
+
+        const card = document.createElement('article');
+        card.className = `${slotClass} relative rounded-3xl overflow-hidden group cursor-pointer theme-card border hover:-translate-y-1 shadow-2xl flex flex-col justify-between p-6 md:p-8`;
+        card.onclick = () => {
+          selectStorySlot(story.slot || index + 1);
+          switchEditorTab('stories');
+          showToastNotification(`Opened Story #${story.slot || index + 1} in Editor`);
+        };
+
+        card.innerHTML = `
+          <div class="absolute inset-0 z-0 overflow-hidden">
+            <img src="${story.imageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80'}" alt="${story.title || 'Tech Story'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out">
+          </div>
+          <div class="absolute inset-0 z-1 bg-gradient-to-t from-[#090a0d]/95 via-[#090a0d]/65 to-[#090a0d]/25"></div>
+
+          <div class="relative z-10 flex flex-col justify-between h-full">
+            <div class="flex items-center justify-between mb-auto">
+              <span class="inline-flex items-center px-3 py-1 rounded-full font-mono text-xs font-semibold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 backdrop-blur-md">
+                ${story.category || 'Technology'}
+              </span>
+              <span class="font-mono text-xs font-bold text-white/80 px-2 py-0.5 rounded" style="background-color: var(--badge-slot-bg)">#${story.slot}${isHero ? ' Lead Story' : ''}</span>
+            </div>
+
+            <div>
+              <h2 class="font-serif ${isHero ? 'text-2xl md:text-3xl lg:text-4xl' : (isWide ? 'text-xl md:text-2xl' : 'text-lg')} font-bold text-white leading-tight mb-2">
+                ${story.title || 'Untitled Story'}
+              </h2>
+              ${story.subtitle && (isHero || isWide) ? `<p class="text-slate-200 text-sm leading-relaxed line-clamp-2 mb-4">${story.subtitle}</p>` : ''}
+
+              <div class="flex items-center justify-between pt-3 border-t border-white/20 text-xs font-mono text-slate-200">
+                <span>${story.author || 'Staff Writer'}</span>
+                <div class="flex items-center gap-2">
+                  <span>⏱️ ${story.readTime || '4 min read'}</span>
+                  <span class="text-indigo-400 font-bold group-hover:translate-x-1 transition-transform">✏️ Edit</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      // Render Weekly 150-Word Summary Preview
+      const summaryTextEl = document.getElementById('preview-weekly-summary-text');
+      const summaryWordCountEl = document.getElementById('preview-summary-word-count');
+      if (summaryTextEl) {
+        summaryTextEl.innerText = edition.summary || 'A connected overview of the week’s most pivotal developments...';
+      }
+      if (summaryWordCountEl) {
+        summaryWordCountEl.innerText = `${countWords(edition.summary)} words`;
+      }
+
+      // Render From The Editor & Bio Preview
+      const editorNoteTextEl = document.getElementById('preview-editors-note-text');
+      const editorNameEl = document.getElementById('preview-editor-name-display');
+      const editorRoleEl = document.getElementById('preview-editor-role-display');
+      const editorAvatarEl = document.getElementById('preview-editor-avatar-img');
+
+      const editorInfo = edition.editor || {
+        name: 'Alex Sterling',
+        role: 'Editor-in-Chief',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80'
+      };
+
+      if (editorNoteTextEl) {
+        editorNoteTextEl.innerText = `"${edition.editorsNote || 'From the desk of the editor...'}"`;
+      }
+      if (editorNameEl) editorNameEl.innerText = editorInfo.name || 'Alex Sterling';
+      if (editorRoleEl) editorRoleEl.innerText = editorInfo.role || 'Editor-in-Chief';
+      if (editorAvatarEl && editorInfo.avatar) editorAvatarEl.src = editorInfo.avatar;
+    }
+
+    // Real-Time Checklist Verification on Draft
+    function updatePublishingChecklist() {
+      const edition = getDraftEdition();
+      if (!edition || !edition.stories) return;
+
+      const lead = edition.stories.find(s => s.slot === 1);
+
+      const checks = [
+        { label: 'All 5 Bento stories have headlines', done: edition.stories.every(s => s.title && s.title.trim().length > 3) },
+        { label: 'Story #1 (Lead Story) has cover image', done: Boolean(lead?.imageUrl && lead.imageUrl.length > 5) },
+        { label: '"The Week, in 150 Words" filled (>=30 words)', done: countWords(edition.summary) >= 30 },
+        { label: '"From the Editor" personal note provided', done: Boolean(edition.editorsNote && edition.editorsNote.trim().length > 10) },
+        { label: 'Edition number & publication date set', done: Boolean(edition.number && edition.date) }
+      ];
+
+      const completed = checks.filter(c => c.done).length;
+      const pct = Math.round((completed / checks.length) * 100);
+
+      const progressTextEl = document.getElementById('checklist-progress-text');
+      const progressBarEl = document.getElementById('checklist-progress-bar');
+      if (progressTextEl) progressTextEl.innerText = `${completed}/${checks.length} Ready (${pct}%)`;
+      if (progressBarEl) progressBarEl.style.width = `${pct}%`;
+
+      const listEl = document.getElementById('checklist-items-list');
+      if (listEl) {
+        listEl.innerHTML = checks.map(c => `
+          <div class="flex items-center gap-2">
+            <span class="${c.done ? 'text-emerald-500 font-bold' : 'opacity-40'}">${c.done ? '✅' : '⭕'}</span>
+            <span style="color: ${c.done ? 'var(--text-primary)' : 'var(--text-muted)'}">${c.label}</span>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Publish Action: ONLY here do draft modifications reflect in Reader's View
+    function publishEditionNow() {
+      // Sync active form input fields into the draft
+      const draft = getDraftEdition();
+      if (draft && draft.stories) {
+        const story = draft.stories.find(s => s.slot === selectedEditorSlot);
+        if (story) {
+          const titleVal = document.getElementById('input-story-title')?.value;
+          const subtitleVal = document.getElementById('input-story-subtitle')?.value;
+          const catVal = document.getElementById('input-story-category')?.value;
+          const timeVal = document.getElementById('input-story-time')?.value;
+          const imgVal = document.getElementById('input-story-image')?.value;
+          const contentVal = document.getElementById('input-story-content')?.value;
+          const authorVal = document.getElementById('input-story-author')?.value;
+          const sourceVal = document.getElementById('input-story-source')?.value;
+
+          if (titleVal !== undefined) story.title = titleVal;
+          if (subtitleVal !== undefined) story.subtitle = subtitleVal;
+          if (catVal !== undefined) story.category = catVal;
+          if (timeVal !== undefined) story.readTime = timeVal;
+          if (imgVal !== undefined) story.imageUrl = imgVal;
+          if (contentVal !== undefined) story.content = contentVal.replace(/\n/g, '<br>');
+          if (authorVal !== undefined) story.author = authorVal;
+          if (sourceVal !== undefined) story.source = sourceVal;
+        }
+
+        const sumVal = document.getElementById('input-weekly-summary')?.value;
+        if (sumVal !== undefined) draft.summary = sumVal;
+
+        const noteVal = document.getElementById('input-editors-note')?.value;
+        if (noteVal !== undefined) draft.editorsNote = noteVal;
+
+        const edNameVal = document.getElementById('input-editor-name')?.value;
+        const edRoleVal = document.getElementById('input-editor-role')?.value;
+        const edAvatarVal = document.getElementById('input-editor-avatar')?.value;
+        if (draft.editor) {
+          if (edNameVal) draft.editor.name = edNameVal;
+          if (edRoleVal) draft.editor.role = edRoleVal;
+          if (edAvatarVal) draft.editor.avatar = edAvatarVal;
+        }
+      }
+
+      const rawNum = document.getElementById('input-edition-number')?.value || '';
+      const cleanNum = rawNum.replace(/^#/, '').trim() || (draft?.number || editingEditionId);
+
+      // Copy draft into published EDITIONS_DATA
+      draft.status = 'published';
+      draft.number = cleanNum;
+      EDITIONS_DATA[cleanNum] = JSON.parse(JSON.stringify(draft));
+      DRAFT_EDITIONS_DATA[cleanNum] = JSON.parse(JSON.stringify(draft));
+
+      editingEditionId = cleanNum;
+      publishedEditionId = cleanNum;
+
+      persistEditionsData();
+      persistDraftsData();
+      history.replaceState(null, '', '#' + cleanNum);
+
+      // Update Reader view now that it is published
+      renderBentoGrid();
+      renderArchiveModalList();
+      populateIssueDropdown();
+      updatePublishingChecklist();
+
+      try {
+        confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 } });
+      } catch (e) { }
+
+      showToastNotification(`🚀 Edition #${cleanNum} is now LIVE & Archived!`);
+      setTimeout(() => {
+        showReaderView();
+      }, 1200);
+    }
+
+    // Drawer Open / Close
+    function openStoryDrawer(storyIndex) {
+      const story = EDITIONS_DATA[publishedEditionId]?.stories?.[storyIndex];
+      if (!story) return;
+
+      document.getElementById('drawer-slot-num').innerText = `Story #${story.slot} of 5`;
+      document.getElementById('drawer-hero-img').src = story.imageUrl || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&auto=format&fit=crop&q=80';
+      document.getElementById('drawer-category').innerText = story.category || 'Technology';
+      document.getElementById('drawer-read-time').innerText = story.readTime || '4 min read';
+      document.getElementById('drawer-title').innerText = story.title || 'Untitled Story';
+      document.getElementById('drawer-subtitle').innerText = story.subtitle || '';
+
+      const authorText = story.author ? `By ${story.author}` : '';
+      const sourceText = story.source ? `Source: ${story.source}` : 'Source: Tech Journal';
+      document.getElementById('drawer-source-name').innerText = authorText ? `${authorText}  ·  ${sourceText}` : sourceText;
+
+      document.getElementById('drawer-full-content').innerHTML = story.content || '<p>No extended prose available for this story.</p>';
+
+      document.getElementById('drawer-backdrop').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('article-drawer').classList.remove('translate-x-full');
+    }
+
+    function closeStoryDrawer() {
+      document.getElementById('drawer-backdrop').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('article-drawer').classList.add('translate-x-full');
+    }
+
+    // =========================================================================
+    // WEEKLY ARCHIVE & HASHTAG NAVIGATION ENGINE
+    // =========================================================================
+    function openArchiveModal() {
+      renderArchiveModalList();
+      const modal = document.getElementById('archive-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeArchiveModal() {
+      const modal = document.getElementById('archive-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function renderArchiveModalList() {
+      const listEl = document.getElementById('archive-editions-list');
+      if (!listEl) return;
+      listEl.innerHTML = '';
+
+      // Collect unique editions by their canonical edition number to prevent any duplicates
+      const uniqueEditions = [];
+      const seenNumbers = new Set();
+
+      // Sort all keys descending by edition number
+      const sortedKeys = Object.keys(EDITIONS_DATA).sort((a, b) => {
+        const numA = parseInt(String(EDITIONS_DATA[a]?.number || a).replace(/\D/g, ''), 10) || 0;
+        const numB = parseInt(String(EDITIONS_DATA[b]?.number || b).replace(/\D/g, ''), 10) || 0;
+        return numB - numA;
+      });
+
+      sortedKeys.forEach(key => {
+        const edition = EDITIONS_DATA[key];
+        if (!edition) return;
+        const cleanNum = String(edition.number || key).replace(/^#/, '').trim();
+        if (seenNumbers.has(cleanNum)) return; // Skip duplicates completely
+        seenNumbers.add(cleanNum);
+        uniqueEditions.push({ key, edition, cleanNum });
+      });
+
+      const currentActiveNum = String(EDITIONS_DATA[publishedEditionId]?.number || publishedEditionId).replace(/^#/, '').trim();
+
+      uniqueEditions.forEach(({ key, edition, cleanNum }) => {
+        const isActive = (cleanNum === currentActiveNum || key === publishedEditionId);
+        const leadStory = (edition.stories || []).find(s => s.slot === 1) || edition.stories?.[0];
+        const leadTitle = leadStory ? leadStory.title : 'Curated Tech Stories';
+        const storiesCount = (edition.stories || []).length || 5;
+
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-2xl cursor-pointer flex items-center justify-between transition-all hover:scale-[1.01] ${isActive ? 'ring-2 ring-indigo-500/40 shadow-lg' : 'hover:border-indigo-400/60'
+          }`;
+        card.style.backgroundColor = 'var(--brand-badge-bg)';
+        card.style.border = isActive ? '1px solid var(--accent-primary)' : '1px solid var(--border-subtle)';
+
+        card.onclick = () => {
+          switchEdition(cleanNum);
+        };
+
+        card.innerHTML = `
+          <div class="pr-3 flex-1 min-w-0">
+            <div class="text-xs font-mono font-bold mb-1 flex items-center gap-2" style="color: ${isActive ? 'var(--accent-primary)' : 'var(--text-muted)'}">
+              <a href="#${cleanNum}" onclick="event.preventDefault(); switchEdition('${cleanNum}');" class="hover:underline">#${cleanNum} · ${edition.date || 'Weekly Edition'}</a>
+              ${isActive ? '<span class="px-2 py-0.5 text-[10px] rounded-full font-bold uppercase tracking-wider" style="background-color: rgba(99, 102, 241, 0.2); color: var(--accent-primary)">(Active)</span>' : ''}
+            </div>
+            <h4 class="font-serif text-base font-bold truncate" style="color: var(--text-primary)">${edition.title || 'Untitled Edition'}</h4>
+            <p class="text-xs mt-1 truncate" style="color: var(--text-muted)">${storiesCount} stories · Lead: "${leadTitle}"</p>
+          </div>
+          <div class="flex-shrink-0">
+            ${isActive
+            ? '<span class="text-xs font-mono font-bold px-2.5 py-1 rounded-md" style="color: var(--accent-primary); background-color: rgba(99, 102, 241, 0.15)">Selected ✓</span>'
+            : '<span class="text-xs font-mono px-2.5 py-1 rounded-md hover:text-indigo-400 font-semibold" style="color: var(--text-muted)">Open →</span>'}
+          </div>
+        `;
+
+        listEl.appendChild(card);
+      });
+    }
+
+    function switchEdition(id, updateHash = true) {
+      let targetKey = id;
+      if (!EDITIONS_DATA[targetKey]) {
+        // Find matching key by edition number or string
+        const cleanId = String(id).replace(/^#/, '').replace(/^edition-?/i, '').trim();
+        const found = Object.keys(EDITIONS_DATA).find(k => {
+          const ed = EDITIONS_DATA[k];
+          return k === cleanId || ed.number === cleanId || parseInt(ed.number, 10) === parseInt(cleanId, 10);
+        });
+        if (found) targetKey = found;
+      }
+
+      if (EDITIONS_DATA[targetKey]) {
+        publishedEditionId = targetKey;
+        const edition = EDITIONS_DATA[targetKey];
+
+        if (updateHash) {
+          history.replaceState(null, '', '#' + (edition.number || targetKey));
+        }
+
+        renderBentoGrid();
+        closeArchiveModal();
+        renderArchiveModalList();
+        showToastNotification(`Switched to Edition #${edition.number || targetKey}`);
+      } else {
+        showToastNotification(`Edition #${id} not found in archive`);
+      }
+    }
+
+    function handleHashNavigation() {
+      const rawHash = window.location.hash.replace(/^#/, '').trim();
+      if (!rawHash) return;
+
+      const clean = rawHash.replace(/^edition-?/i, '');
+      if (REMOVED_EDITIONS.has(clean) || REMOVED_EDITIONS.has(rawHash)) {
+        history.replaceState(null, '', '#069');
+        switchEdition('069', false);
+        return;
+      }
+
+      const foundKey = Object.keys(EDITIONS_DATA).find(k => {
+        const ed = EDITIONS_DATA[k];
+        return k === rawHash || k === clean || ed?.number === rawHash || ed?.number === clean || parseInt(ed?.number, 10) === parseInt(clean, 10);
+      });
+
+      if (foundKey && foundKey !== publishedEditionId) {
+        switchEdition(foundKey, false);
+      }
+    }
+
+    window.addEventListener('hashchange', handleHashNavigation);
+
+    // =========================================================================
+    // THEME ENGINE (DARK / LIGHT TOGGLE + PERSISTENCE + SYNC)
+    // =========================================================================
+    function getActiveTheme() {
+      return document.documentElement.getAttribute('data-theme') || 'dark';
+    }
+
+    function setAppTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      try {
+        localStorage.setItem('wtj_theme_v1', theme);
+      } catch (e) { }
+
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      }
+
+      syncThemeIcons(theme);
+    }
+
+    function syncThemeIcons(theme) {
+      const isDark = theme === 'dark';
+      const sunIcon = document.getElementById('theme-icon-sun');
+      const moonIcon = document.getElementById('theme-icon-moon');
+      const themeBtn = document.getElementById('theme-toggle-btn');
+
+      if (sunIcon && moonIcon) {
+        if (isDark) {
+          sunIcon.classList.remove('hidden');
+          moonIcon.classList.add('hidden');
+        } else {
+          sunIcon.classList.add('hidden');
+          moonIcon.classList.remove('hidden');
+        }
+      }
+
+      if (themeBtn) {
+        themeBtn.title = isDark ? 'Switch to Light Paper Mode' : 'Switch to Obsidian Dark Mode';
+      }
+    }
+
+    function toggleTheme() {
+      const current = getActiveTheme();
+      const next = current === 'dark' ? 'light' : 'dark';
+      setAppTheme(next);
+      showToastNotification(next === 'dark' ? '🌙 Obsidian Dark Mode active' : '☀️ Editorial Light Mode active');
+    }
+
+    function adjustFontSize(size) {
+      const container = document.getElementById('drawer-prose-container');
+      if (size === 'small') container.style.fontSize = '0.9rem';
+      if (size === 'medium') container.style.fontSize = '1.05rem';
+      if (size === 'large') container.style.fontSize = '1.25rem';
+    }
+
+    function showToastNotification(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').innerText = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 2800);
+    }
+
+    function copyArticleLink() {
+      const ed = EDITIONS_DATA[publishedEditionId];
+      const url = `${window.location.origin}${window.location.pathname}#${ed?.number || publishedEditionId}`;
+      navigator.clipboard.writeText(url).then(() => {
+        showToastNotification(`✨ Edition #${ed?.number || publishedEditionId} link copied to clipboard!`);
+      }).catch(() => {
+        showToastNotification(`✨ Edition #${ed?.number || publishedEditionId} link copied!`);
+      });
+    }
+
+    // Initial render on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const current = getActiveTheme();
+      syncThemeIcons(current);
+      handleHashNavigation();
+      renderBentoGrid();
+      renderArchiveModalList();
+    });
+  </script>
+</body>
+
+</html>
