@@ -1,6 +1,5 @@
-import React, { useState,useEffect } from 'react';
-import { Eye, Download, RefreshCw } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import React, { useState, useEffect } from 'react';
+import { Eye, Download, RefreshCw, Save, Loader2 } from 'lucide-react';
 import { countWords } from '../utils/helpers';
 import EditionManager from './editor/EditionManager';
 import PublishingChecklist from './editor/PublishingChecklist';
@@ -11,8 +10,8 @@ import BentoLivePreview from './editor/BentoLivePreview';
 
 /**
  * EditorPanel Component
- * Main CMS orchestrator connecting Edition Manager, Story Editor (1-5),
- * Live Bento Preview, and Publishing Checklist.
+ * Main CMS studio orchestrator connecting Edition Manager, Story Editor (1-5),
+ * Live Bento Preview, and Publishing Checklist to the backend API.
  */
 export default function EditorPanel({
   editions,
@@ -20,10 +19,15 @@ export default function EditorPanel({
   draftEdition: propDraftEdition,
   onUpdateDraftEdition,
   onPublishEdition,
+  onSaveDraft,
   onCreateEdition,
+  onDeleteEdition,
   onResetDefaults,
+  onSelectEdition,
   onShowToast,
-  onSwitchToReader
+  onSwitchToReader,
+  isSaving,
+  isPublishing
 }) {
   const [selectedStorySlot, setSelectedStorySlot] = useState(1); // 1 to 5
   const [activeTab, setActiveTab] = useState('stories'); // 'stories' | 'summary' | 'editorNote' | 'preview'
@@ -33,9 +37,9 @@ export default function EditorPanel({
 
   useEffect(() => {
     setLocalDraftEdition(activeEdition);
-  }, [activeEdition.id]);
+  }, [activeEdition?.id]);
 
-  const draftEdition = propDraftEdition || localDraftEdition;
+  const draftEdition = propDraftEdition || localDraftEdition || {};
 
   const updateDraft = (updated) => {
     if (onUpdateDraftEdition) {
@@ -45,7 +49,7 @@ export default function EditorPanel({
     }
   };
 
-  // --- Handlers for updating Edition & Stories in DRAFT only ---
+  // --- Handlers for updating Edition & Stories in DRAFT ---
   const handleUpdateEditionField = (field, value) => {
     const updatedEdition = {
       ...draftEdition,
@@ -83,7 +87,7 @@ export default function EditorPanel({
     const updatedEdition = { ...draftEdition, stories: updatedStories };
     updateDraft(updatedEdition);
     setSelectedStorySlot(targetSlot);
-    onShowToast(`Swapped Story #${currentSlot} with Story #${targetSlot}`);
+    onShowToast(`Swapped Story #${currentSlot} with Story #${targetSlot} (client session)`);
   };
 
   // --- Publishing Checklist Validation ---
@@ -114,22 +118,18 @@ export default function EditorPanel({
 
   const isReadyToPublish = checklist.every((item) => item.done);
 
-  // --- Publish Handler: ONLY here do modifications reflect in Reader's View ---
-  const handlePublish = () => {
-    const publishedEdition = { ...draftEdition, status: 'published' };
+  // --- Publish Handler ---
+  const handlePublish = async () => {
     if (onPublishEdition) {
-      onPublishEdition(publishedEdition);
+      await onPublishEdition(draftEdition, 'publish');
     }
-    updateDraft(publishedEdition);
+  };
 
-    try {
-      confetti({
-        particleCount: 90,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-    } catch (err) {}
-    onShowToast(`🚀 Edition #${publishedEdition.number || ''} is now LIVE!`);
+  // --- Save Draft Handler ---
+  const handleSave = async () => {
+    if (onSaveDraft) {
+      await onSaveDraft(draftEdition);
+    }
   };
 
   // --- Export JSON ---
@@ -151,17 +151,25 @@ export default function EditorPanel({
         <EditionManager
           edition={draftEdition}
           editions={editions}
-          onSelectEdition={(num) => {
-            const ed = editions.find(e => e.number === num || e.id === num || e.id === `edition-${num}`);
-            if (ed) {
-              updateDraft(ed);
-              onShowToast(`Editing Edition #${ed.number}`);
+          onSelectEdition={(id) => {
+            if (onSelectEdition) {
+              onSelectEdition(id);
+            } else {
+              const ed = editions.find(e => e.id === id || e.number === id);
+              if (ed) {
+                updateDraft(ed);
+                onShowToast(`Editing Edition #${ed.number}`);
+              }
             }
           }}
           onUpdateField={handleUpdateEditionField}
           onCreateNewEdition={onCreateEdition}
           onPublish={handlePublish}
+          onSaveDraft={handleSave}
+          onDeleteEdition={onDeleteEdition}
           isReadyToPublish={isReadyToPublish}
+          isSaving={isSaving}
+          isPublishing={isPublishing}
         />
 
         <PublishingChecklist
@@ -186,14 +194,15 @@ export default function EditorPanel({
               className="btn-icon"
               style={{ width: '100%', fontSize: '0.75rem', gap: '0.35rem' }}
               onClick={() => {
-                if (window.confirm('Reset all editions back to seed data?')) {
-                  onResetDefaults();
+                if (window.confirm('Reset local draft edits back to current saved edition?')) {
+                  updateDraft(activeEdition);
+                  onShowToast('Reset draft to current edition data.');
                 }
               }}
-              title="Reset data"
+              title="Reset current draft"
             >
               <RefreshCw size={14} />
-              <span>Reset Data</span>
+              <span>Reset Draft</span>
             </button>
           </div>
         </div>
